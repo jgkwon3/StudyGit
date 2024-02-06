@@ -3,25 +3,34 @@ package test.StudyGit.hyojin;
 import java.util.Scanner;
 
 public class NM1_15649 {
-    public static void main(String[] args) { // 경우의수 구하고 나머지 코드 작성 예정
+    public static int[] arr;
+    public static boolean[] visit;
+    public static void main(String[] args) { 
         Scanner sc =new Scanner(System.in);
         int N= sc.nextInt();
         int M= sc.nextInt();
-        int p=1;
-        for (int i = 0; i < M; i++) { //경우의 수 구하기
-            p= p*(N-i);
-        }
-        int[][] arr = new int[p][M];
-
-        for (int i = 1; i <= N; i++) {
-
-            if (M == 1) {
-                //System.out.println(i);
-            }else{
-
-            }
-        }
+        arr = new int[M];
+        visit = new boolean[N];
+        dfs(N, M, 0); // 0을 초기값으로 두어 start는 0부터 M까지
 
     }
-
+    // i=0(i=1())
+    public static void dfs(int N, int M, int start) {
+        if (start == M) {
+            for (int i : arr) {
+                System.out.print(i+" ");
+            }
+            System.out.println();
+            return; // 재귀 종료 시켜주어서 밑에 for문이 더 돌아가지않게 만들어준다.
+                    // -> 종료 시키지 않을 경우 arr[start(=M)] 이 들어가게 된다. 즉 start는 M의 값이 되면 if문을 통해 종료된다.
+        }
+        for (int i = 0; i < N; i++) {
+            if (!visit[i]) {
+                visit[i]=true;
+                arr[start]=i+1;
+                dfs(N,M,start+1);
+                visit[i]=false; // 재귀 종료시 그 값 초기화
+            }
+        }
+    }
 }
